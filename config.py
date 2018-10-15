@@ -9,6 +9,7 @@ description:
 """
 
 from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 # 配置数据库连接, 请修改一下四个变量为自己数据库的配置信息,即可。
 DB_USER = "user"                        # 数据库用户名
@@ -19,3 +20,4 @@ DB_NAME = "test"                        # 数据库名
 
 
 engine = create_engine('mysql+pymysql://{}:{}@{}:3306/{}' .format(DB_USER, DB_PASSWORD, DB_HOST, DB_NAME))
+Session =sessionmaker(bind=engine)
