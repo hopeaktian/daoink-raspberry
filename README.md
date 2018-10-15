@@ -15,10 +15,32 @@
 2. 在 `config.py` 里面配置好数据库的信息
 3. 安装软件依赖包 \
 `pip install -r requirements.txt`
-4. 运行软件 \
+4. 初始化程序, 用于删除git提交空目录时的占位文件，首次运行时请执行。  \
+`sh init.sh`
+5. 运行软件 \
 打开树莓派终端，并进入软件根目录，执行以下命令以运行后台脚本，程序将会在后台保持运行。
 `sh start.sh`
 
 ### 软件目录介绍
+```
+rooins-raspberry/
+├── config.py                   数据库配置文件
+├── init.sh                     初始化脚本，首次运行，请执行。
+├── log                         日志目录
+│   ├── download_error_log      下载错误日志
+│   ├── download_log            下载成功日志
+│   ├── print_access_log        打印成功日志
+│   ├── print_error_log         打印错误日志
+│   ├── ToPrint_filename        预打印文件名
 
+├── main.py                     主程序
+├── model.py                    数据库模型
+├── README.md                   
+├── requirements.txt            python依赖包
+├── start.sh                    启动脚本
+└── User_Files                  文件下载目录
+    ├── Finished_Print          已经打印的文件目录
+    └── To_Print                预打印文件目录
+    
+```
     
