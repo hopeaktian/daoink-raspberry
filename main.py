@@ -61,7 +61,9 @@ def Print():
         print line
         try:
             # 开始尝试打印
-            subprocess.call('lpr ./User_Files/To_Print/{}' .format(line))
+            print_cmd = 'lpr ./User_Files/To_Print/{}' .format(line)
+            print print_cmd
+            subprocess.call(print_cmd)
         except Exception as e:
             # 捕获错误，并将错误写入错误日志中
             with open('./log/print_error_log', 'a') as f:
