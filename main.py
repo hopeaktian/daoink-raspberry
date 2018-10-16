@@ -60,14 +60,14 @@ def Print():
     for line in ToPrint:
         try:
             # 开始尝试打印
-            os.system('lpr ./User_Files/To_Print/{}' .format(line))
+            subprocess.call('lpr ./User_Files/To_Print/{}' .format(line))
         except Exception as e:
             # 捕获错误，并将错误写入错误日志中
             with open('./log/print_error_log', 'a') as f:
                 f.write(str(datetime.datetime.now()) + " " + str(e) + "\n")
         else:
             # 将打印成功的文件移动到 ./User_Files/Finished_Print 这个目录中
-            os.system('mv ./User_Files/To_Print/{} ./User_Files/Finished_Print/' .format(line))
+            subprocess.call('mv ./User_Files/To_Print/{} ./User_Files/Finished_Print/' .format(line))
 
             # 在数据库中修改打印状态为3，表示已经打印
             printed_order = session2.query(Order).filter(Order.File_Dir == line)
