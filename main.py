@@ -9,7 +9,7 @@ description:
 
 from config import engine, Session
 from model import Base, Order
-import datetime, traceback, time, subprocess
+import datetime, traceback, time, requests
 
 
 
@@ -24,8 +24,16 @@ def Query():
             if All_Order[i].Print_Status == 1:
                 # 尝试下载订单中的文件
                 try:
-                    cmd = "wget http://rooins.careyou.xin/static/Upload_Files/{} -P ./User_Files/To_Print" .format(All_Order[i].File_Dir)
-                    subprocess.call(cmd, shell=True)
+                    url = "http://rooins.careyou.xin/static/Upload_Files/"+All_Order[i].File_Dir
+                    r = requests.get(url)
+                    if r.status_code != 200:            # 判断url若不是200，则记录错误到日志
+                        raise IOError('{} {} {}' .format(r.status_code, r.reason, r.url))
+                        # with open('./log/download_error_log', 'a') as f:
+                        #     f.write(str(datetime.datetime.now()) + " " + All_Order[i].File_Dir + " " + str(r.status_code) + " " +
+                        #             r.reason + " " + r.url + "\n")
+                    else:
+                        with open('./User_Files/To_Print/'+All_Order[i].File_Dir, 'wb') as f:
+                            f.write(r.content)
                 except Exception as e:
                     # 将错误写入下载错误日志
                     print "Error"
