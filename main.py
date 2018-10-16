@@ -9,7 +9,7 @@ description:
 
 from config import engine, Session
 from model import Base, Order
-import datetime, traceback, time, requests, subprocess
+import datetime, traceback, time, requests, subprocess, os
 
 
 
@@ -61,7 +61,7 @@ def Print():
         print line
         try:
             # 开始尝试打印
-            print_cmd = 'lpr ./User_Files/To_Print/{}' .format(line)
+            print_cmd = 'lpr {}/User_Files/To_Print/{}' .format(os.path.abspath('.'), line)
             print print_cmd
             subprocess.call(print_cmd)
         except Exception as e:
