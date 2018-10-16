@@ -25,7 +25,7 @@ def Query():
                 # 尝试下载订单中的文件
                 try:
                     cmd = "wget http://rooins.careyou.xin/static/Upload_Files/{} -P ./User_Files/To_Print" .format(All_Order[i].File_Dir)
-                    subprocess.call(cmd)
+                    subprocess.call(cmd, shell=True)
                 except Exception as e:
                     # 将错误写入下载错误日志
                     print "Error"
