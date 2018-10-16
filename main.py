@@ -58,13 +58,14 @@ def Print():
     subprocess.call(cmd, shell=True)
     ToPrint = open("./log/ToPrint_filename", 'r+')
     for line in ToPrint:
+        print line
         try:
             # 开始尝试打印
             subprocess.call('lpr ./User_Files/To_Print/{}' .format(line))
         except Exception as e:
             # 捕获错误，并将错误写入错误日志中
             with open('./log/print_error_log', 'a') as f:
-                f.write(str(datetime.datetime.now()) + " " + line + " " + str(e) + "\n")
+                f.write(str(datetime.datetime.now()) + " " + line[-2] + " " + str(e) + "\n")
         else:
             # 将打印成功的文件移动到 ./User_Files/Finished_Print 这个目录中
             subprocess.call('mv ./User_Files/To_Print/{} ./User_Files/Finished_Print/' .format(line))
