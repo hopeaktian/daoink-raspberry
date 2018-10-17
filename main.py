@@ -56,7 +56,7 @@ def Print():
         print line
         try:
             # 开始尝试打印
-            print_cmd = 'lpr ./User_Files/To_Print/{}' .format(line)
+            print_cmd = 'lpr ./User_Files/To_Print/'+line
             returnCode = subprocess.call(print_cmd, shell=True)
             if returnCode != 0:
                 raise IOError(commands.getoutput(print_cmd))
