@@ -63,6 +63,7 @@ def Print():
                 error = commands.getoutput(print_cmd)
                 raise IOError(error)
         except Exception as e:
+            print str(e)
             # 捕获错误，并将错误写入错误日志中
             with open('./log/print_error_log', 'a') as f:
                 f.write(str(datetime.datetime.now()) + " " + line[:-1] + " " + str(e) + "\n")
