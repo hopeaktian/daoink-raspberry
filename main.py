@@ -59,7 +59,9 @@ def Print():
             print_cmd = 'lpr ./User_Files/To_Print/'+line
             returnCode = subprocess.call(print_cmd, shell=True)
             if returnCode != 0:
-                raise IOError(commands.getoutput(print_cmd))
+                print commands.getoutput(print_cmd)
+                error = commands.getoutput(print_cmd)
+                raise IOError(error)
         except Exception as e:
             # 捕获错误，并将错误写入错误日志中
             with open('./log/print_error_log', 'a') as f:
