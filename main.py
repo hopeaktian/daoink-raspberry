@@ -28,15 +28,11 @@ def Query():
                     r = requests.get(url)
                     if r.status_code != 200:            # 判断url若不是200，则记录错误到日志
                         raise IOError('{} {} {}' .format(r.status_code, r.reason, r.url))
-                        # with open('./log/download_error_log', 'a') as f:
-                        #     f.write(str(datetime.datetime.now()) + " " + All_Order[i].File_Dir + " " + str(r.status_code) + " " +
-                        #             r.reason + " " + r.url + "\n")
                     else:
                         with open('./User_Files/To_Print/'+All_Order[i].File_Dir, 'wb') as f:
                             f.write(r.content)
                 except Exception as e:
                     # 将错误写入下载错误日志
-                    print "Error"
                     with open('./log/download_error_log', 'a') as f:
                         f.write(str(datetime.datetime.now()) + " " + All_Order[i].File_Dir + " " + str(e) + "\n")
                 else:
@@ -54,7 +50,6 @@ def Print():
     session2 = Session()
     # 将 ./User_Files/To_Print/ 中的文件名导入到预打印日志中
     cmd = "ls ./User_Files/To_Print/ > ./log/ToPrint_filename"
-    print cmd
     subprocess.call(cmd, shell=True)
     ToPrint = open("./log/ToPrint_filename", 'r+')
     for line in ToPrint:
