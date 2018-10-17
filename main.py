@@ -56,16 +56,17 @@ def Print():
         print line
         try:
             # 开始尝试打印
-            print_cmd = 'lpr {}/User_Files/To_Print/{}' .format(os.path.abspath('.'), line)
-            print print_cmd
-            subprocess.call(print_cmd, shell=True)
+            print_cmd = 'lpr ./User_Files/To_Print/{}' .format(line)
+            returnCode = subprocess.call(print_cmd, shell=True)
+            if returnCode != 0:
+                raise IOError(commands.getoutput(print_cmd))
         except Exception as e:
             # 捕获错误，并将错误写入错误日志中
             with open('./log/print_error_log', 'a') as f:
                 f.write(str(datetime.datetime.now()) + " " + line[:-1] + " " + str(e) + "\n")
         else:
             # 将打印成功的文件移动到 ./User_Files/Finished_Print 这个目录中
-            subprocess.call('mv ./User_Files/To_Print/{} ./User_Files/Finished_Print/' .format(line))
+            subprocess.call('mv ./User_Files/To_Print/{} ./User_Files/Finished_Print/' .format(line), shell=True)
 
             # 在数据库中修改打印状态为3，表示已经打印
             printed_order = session2.query(Order).filter(Order.File_Dir == line)
