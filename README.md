@@ -21,8 +21,13 @@
 2. 首先须确定已经在树莓派上安装 `lpr` 命令, 并调试好打印机，确保`lpr`命令能成功打印文件。(已经在树莓派安装lpr的请跳过此步骤) \
 `apt install lpr`
 3. 在 `config.py` 里面配置好数据库的信息
-4. 安装软件依赖包 \
-`pip install -r requirements.txt`
+4. 创建虚拟Python环境，请先检查树莓派系统中是否安装virtualenv命令，没有此命令的请用一下命令安装。\
+`sudo apt-get install virtualenv -y`
+然后创建python2.7的虚拟环境使用以下命令 \
+`virtualenv env`
+5. 安装软件依赖包：安装之前先激活python虚拟环境 \
+激活环境： `source ./env/bin/activate` \
+安装依赖包： `pip install -r requirements.txt`
 ### 使用说明
 1. 首次使用时请务必执行初始化程序, 用于删除为git提交空目录时创建占位文件。\
 `sh init.sh`
