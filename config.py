@@ -11,7 +11,7 @@ description:
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-# 配置数据库连接, 请修改一下四个变量为自己数据库的配置信息,即可。
+# 配置数据库连接, 请修改以下四个变量的值为自己数据库的配置信息,即可。
 DB_USER = "user"                        # 数据库用户名
 DB_PASSWORD = "password"                # 数据库密码
 DB_HOST = "localhost"                   # 数据库主机
