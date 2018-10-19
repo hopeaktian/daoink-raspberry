@@ -7,7 +7,7 @@ author:    peak
 description:
 """
 
-from config import engine, Session
+from config import engine, Session, Printer_Name
 from model import Base, Order
 import datetime, traceback, time, requests, subprocess, os, commands
 
@@ -49,13 +49,17 @@ def Print():
     Base.metadata.create_all(engine)
     session2 = Session()
     # 将 ./User_Files/To_Print/ 中的文件名导入到预打印日志中
-    cmd = "ls ./User_Files/To_Print/ > ./log/ToPrint_filename"
+    cmd = "ls -t ./User_Files/To_Print/ > ./log/ToPrint_filename"
     subprocess.call(cmd, shell=True)
     ToPrint = open("./log/ToPrint_filename", 'r+')
+    direction_option = ""     # 打印方向参数
     for line in ToPrint:
+        printed_order = session2.query(Order).filter(Order.File_Dir == line)  # 查询当前打印订单对象
+        if printed_order.Print_Direction == 2:
+            direction_option = "-o landscape"
         try:
             # 开始尝试打印
-            print_cmd = 'lpr ./User_Files/To_Print/'+line[:-1]
+            print_cmd = 'lp -d {} -n {} -o fitplot {} ./User_Files/To_Print/{}' .format(Printer_Name, printed_order.Print_Copies, direction_option, line[:-1])
             returnCode = subprocess.call(print_cmd, shell=True)
             if returnCode != 0:
                 error = commands.getoutput(print_cmd)
@@ -69,14 +73,14 @@ def Print():
             subprocess.call('mv ./User_Files/To_Print/{} ./User_Files/Finished_Print/' .format(line), shell=True)
 
             # 在数据库中修改打印状态为3，表示已经打印
-            printed_order = session2.query(Order).filter(Order.File_Dir == line)
+
             printed_order.Print_Status = 3
             session2.commit()
             # session2.close()
 
             # 在./log/print_access_log 中写入打印成功日志
             with open('./log/print_access_log', 'a') as f:
-                f.write(str(datetime.datetime.now()) + " " + line + "success-printed")
+                f.write(str(datetime.datetime.now()) + " " + line + " " + "Successfully-Added-To-Printer")
 
 while 1:
     Query()

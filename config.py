@@ -21,3 +21,7 @@ DB_NAME = "test"                        # 数据库名
 
 engine = create_engine('mysql+pymysql://{}:{}@{}:3306/{}' .format(DB_USER, DB_PASSWORD, DB_HOST, DB_NAME))
 Session =sessionmaker(bind=engine)
+
+
+# 打印机名字，请将以下变量的值修改为自己的打印机名字,作为lp 打印命令的参数
+Printer_Name = "test"
