@@ -9,7 +9,7 @@ description:
 
 from config import engine, Session, Printer_Name
 from model import Base, Order
-import datetime, traceback, time, requests, subprocess, os, commands
+import datetime, time, requests, subprocess, os, commands
 
 
 
@@ -54,7 +54,7 @@ def Print():
     ToPrint = open("./log/ToPrint_filename", 'r+')
     direction_option = ""     # 打印方向参数
     for line in ToPrint:
-        printed_order = session2.query(Order).filter(Order.File_Dir == line)  # 查询当前打印订单对象
+        printed_order = session2.query(Order).filter(Order.File_Dir == line[:-1])  # 查询当前打印订单对象
         if printed_order.Print_Direction == 2:
             direction_option = "-o landscape"
         try:
@@ -70,7 +70,7 @@ def Print():
                 f.write(str(datetime.datetime.now()) + " " + line[:-1] + " " + str(e) + "\n")
         else:
             # 将打印成功的文件移动到 ./User_Files/Finished_Print 这个目录中
-            subprocess.call('mv ./User_Files/To_Print/{} ./User_Files/Finished_Print/' .format(line), shell=True)
+            subprocess.call('mv ./User_Files/To_Print/{} ./User_Files/Finished_Print/' .format(line[:-1]), shell=True)
 
             # 在数据库中修改打印状态为3，表示已经打印
 
@@ -80,7 +80,7 @@ def Print():
 
             # 在./log/print_access_log 中写入打印成功日志
             with open('./log/print_access_log', 'a') as f:
-                f.write(str(datetime.datetime.now()) + " " + line + " " + "Successfully-Added-To-Printer")
+                f.write(str(datetime.datetime.now()) + " " + line[:-1] + " " + "Successfully-Added-To-Printer")
 
 while 1:
     Query()
