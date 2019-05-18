@@ -14,7 +14,7 @@ def status_sync(device_name):
     else:
         r.rpush("test_printer", status)         # pinter status
         r.rpush("test_printer", check_time)     # check time
-        r.rpush("test_printer", None)           # device useable status
+        r.rpush("test_printer", 0)              # device useable status
 
 while True:
     status_sync(Printer_grep)
