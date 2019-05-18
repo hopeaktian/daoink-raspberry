@@ -25,3 +25,4 @@ Session =sessionmaker(bind=engine)
 
 # 打印机名字，请将以下变量的值修改为自己的打印机名字,作为lp 打印命令的参数
 Printer_Name = "test"
+Printer_grep = "LaserJet 1015"

@@ -2,7 +2,7 @@
 from check_usb import check_usb
 import redis
 import time
-
+from config import Printer_grep
 
 def status_sync(device_name):
     status = check_usb(device_name)
@@ -12,5 +12,5 @@ def status_sync(device_name):
     r.rpush("test_printer", check_time)
 
 while True:
-    status_sync()
+    status_sync(Printer_grep)
     time.sleep(1)
