@@ -12,9 +12,10 @@ def status_sync(device_name):
         r.lset("test_printer", 0, status)
         r.lset("test_printer", 1, check_time)
     else:
-        r.rpush("test_printer", status)
-        r.rpush("test_printer", check_time)
+        r.rpush("test_printer", status)         # pinter status
+        r.rpush("test_printer", check_time)     # check time
+        r.rpush("test_printer", None)           # device useable status
 
 while True:
     status_sync(Printer_grep)
-    time.sleep(1)
+    time.sleep(2)
